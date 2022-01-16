@@ -41,6 +41,9 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.erpnext-nginx.rule=Host(${SITES})"
+      - "traefik.http.routers.erpnext-nginx.rule=HostRegexp(`{catchall:.*}`)"
+      - "traefik.http.middlewares.erpnext-nginx.headers.customrequestheaders.Host=erpnext-nginx"
+      - "traefik.http.routers.erpnext-nginx.middlewares=erpnext-nginx"
       - "${ENTRYPOINT_LABEL}"
       - "${CERT_RESOLVER_LABEL}"
       - "traefik.http.services.erpnext-nginx.loadbalancer.server.port=8080"
